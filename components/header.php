@@ -221,6 +221,13 @@
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
+    <?php   
+    if ($is_homepage){
+        echo '<section class="hero">';
+    } else {
+        echo '<section class="hero hero-normal">';
+    }
+    ?>
     <!-- <section class="hero"> -->
         <div class="container">
             <div class="row">
@@ -264,7 +271,10 @@
                     </nav>
                 <!-- </div> -->
                     
-                    <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
+                    <?php   
+    if ($is_homepage){
+       ?>
+ <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
                         <div class="hero__text">
                             <span>FRUIT FRESH</span>
                             <h2>Vegetable <br />100% Organic</h2>
@@ -272,6 +282,9 @@
                             <a href="#" class="primary-btn">SHOP NOW</a>
                         </div>
                     </div>
+<?php
+    }
+    ?>
                    
                 </div>
             </div>
