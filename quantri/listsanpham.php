@@ -34,7 +34,16 @@ function anhdaidien($arrstr,$height){
                     <th>Hành động</th>
                 </tr>
             </thead>
-           
+            <tfoot>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Ảnh đại diện</th>
+                    <th>Danh mục</th>
+                    <th>Thương hiệu</th>                    
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </tfoot>
             <tbody>
             <?php 
     require('../db/conn.php');

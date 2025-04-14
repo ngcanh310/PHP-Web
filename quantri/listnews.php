@@ -32,7 +32,16 @@ function anhdaidien($arrstr,$height){
                     <th>Hành động</th>
                 </tr>
             </thead>
-           
+            <tfoot>
+                <tr>
+                <th>STT</th>
+                    <th>Tiêu đề</th>
+                    <th>Ảnh đại diện</th>
+                    <th>Danh mục</th>
+                   
+                    <th>Hành động</th>
+                </tr>
+            </tfoot>
             <tbody>
             <?php 
     require('../db/conn.php');

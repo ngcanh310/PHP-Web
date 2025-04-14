@@ -9,9 +9,9 @@
                         <a href="./index.html"><img src="../img/logo.png" alt=""></a>
                     </div>
                     <ul>
-                        <li>Địa chỉ: Thanh Xuân, Hà Nội, Việt Nam</li>
-                        <li>Số điện thoại: 09817346672</li>
-                        <li>Email: ngocank310@gmail.com</li>
+                        <li>Địa chỉ: Đội 2, thôn Đồng Viên, xã Nghĩa Hiệp, huyện Tư Nghĩa, tỉnh Quảng Ngãi</li>
+                        <li>Số điện thoại: 0942.814.192</li>
+                        <li>Email: votuongvienvo@gmail.com</li>
                     </ul>
                 </div>
             </div>

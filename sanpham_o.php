@@ -1,46 +1,9 @@
 
     <?php
-    session_start();
     $is_homepage = false;
-
-    require_once('./db/conn.php');
-
-    //kiem tra nut them vao gio duoc nhan
-    if (isset($_POST['atcbtn'])) {
-        $id = $_POST['pid'];
-        $qty = $_POST['qty'];
-        // them san pham vao gio hang
-        $cart = [];
-        if (isset($_SESSION['cart'])) {
-            $cart = $_SESSION['cart'];
-        }
-        // print_r($cart);
-        $isFound = false;
-        for ($i = 0; $i < count($cart); $i++) {
-            // print_r($cart[$i]);
-            if ($cart[$i]['id'] == $id) {
-                $cart[$i]['qty']+= $qty; 
-                $isFound = true;
-                break;
-            }
-        }
-        if (!$isFound) {  //khong tim thay san pham trong gio
-            $sql_str = "select * from products where id = $id";
-            // echo $sql_str; exit;
-            $result = mysqli_query($conn, $sql_str);
-            $product = mysqli_fetch_assoc($result);//thuc thi cau lenh ('select * from products where id = '.$id, true);
-            $product['qty'] = $qty;
-            $cart[] = $product;
-        }
-
-        //update session
-        $_SESSION['cart'] = $cart;
-        // print_r($cart); exit;
-    }
-
     require_once('components/header.php');
 
-    //toi uu code sau
+    require_once('./db/conn.php');
     $idsp = $_GET['id'];
     $sql_str = "select * from products where id=$idsp";
     $result = mysqli_query($conn, $sql_str);
@@ -113,18 +76,14 @@
                         <p>
                             <?= $row['summary'] ?>
                         </p>
-                        <form method="post">
-                            <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1" >
-                                        <input type="hidden" value="1" name="qty">
-                                    </div>
-                                    <input type="hidden" name="pid" value="<?=$idsp?>">
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" value="1">
                                 </div>
                             </div>
-                            <button class="primary-btn" name="atcbtn">Thêm vào giỏ hàng</button>
-                        </form>
+                        </div>
+                        <a href="#" class="primary-btn">Thêm vào giỏ hàng</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>

@@ -57,8 +57,8 @@ $sql_str = "INSERT INTO `products` (`id`, `name`, `slug`, `description`, `summar
     '$slug', 
     '$description', '$sumary', $stock, $giagoc, $giaban,'$imgs', $danhmuc, $thuonghieu, 'Active', NULL, NULL);";
 
-// echo $sql_str;
-// exit;
+echo $sql_str;
+exit;
 
 //thuc thi cau lenh
 mysqli_query($conn, $sql_str);

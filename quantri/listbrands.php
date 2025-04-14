@@ -25,6 +25,15 @@ require('includes/header.php');
                 <th>Operation</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <th>Brand</th>
+                <th>Slug</th>
+                
+                <th>Status</th>
+                <th>Operation</th>
+            </tr>
+        </tfoot>
         <tbody>
 <?php 
     require('../db/conn.php');
