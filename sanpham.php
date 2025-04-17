@@ -57,8 +57,8 @@
                             <?= $row['name'] ?>
                         </h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Trang chủ</a>
-                            <a href="./index.html">Sản phẩm</a>
+                            <a href="./index.php">Trang chủ</a>
+                            <a href="./shop.php">Sản phẩm</a>
                             <span>
                                 <?= $row['name'] ?>
                             </span>
@@ -108,7 +108,13 @@
                             <span>(18 reviews)</span>
                         </div>
                         <div class="product__details__price">
-                            <?= $row['price'] ?>
+                            <?php if ($row['price'] != $row['disscounted_price']) { ?>
+                                <span class="old"><del><?= number_format($row['price'], 0, '', '.') . " VNĐ" ?></del></span>
+                                <span class="curr"> ->
+                                    <?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                            <?php } else { ?>
+                                <span class="old"><?= number_format($row['price'], 0, '', '.') . " VNĐ" ?></span>
+                            <?php } ?>
                         </div>
                         <p>
                             <?= $row['summary'] ?>
@@ -229,7 +235,13 @@ while($row2 = mysqli_fetch_assoc($result2)) {
                         </div>
                         <div class="product__item__text">
                             <h6><a href="sanpham.php?id=<?=$row2['id']?>"><?=$row2['name']?></a></h6>
-                            <h5><?=$row2['disscounted_price']?></h5>
+                            <?php if ($row2['price'] != $row['disscounted_price']) { ?>
+                                <span class="old"><del><?= number_format($row2['price'], 0, '', '.') . " VNĐ" ?></del></span>
+                                <span class="curr"> ->
+                                    <?= number_format($row2['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                            <?php } else { ?>
+                                <span class="old"><?= number_format($row2['price'], 0, '', '.') . " VNĐ" ?></span>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

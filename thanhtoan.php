@@ -10,25 +10,41 @@ if (isset($_SESSION['cart'])) {
 require_once('./db/conn.php');
 
 if (isset($_POST['btDathang'])) {
-    // Lưu thông tin người dùng và giỏ hàng vào SESSION
-    $_SESSION['temp_order'] = [
-        'firstname' => $_POST['firstname'],
-        'lastname' => $_POST['lastname'],
-        'phone' => $_POST['phone'],
-        'email' => $_POST['email'],
-        'address' => $_POST['address'],
-        'cart' => $_SESSION['cart'] ?? []
-    ];
+    //lay thong tin khach hang tu form
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    //tao du lieu cho order
+    $sqli = "insert into orders values (0, 0, '$firstname', '$lastname', '$address', '$phone', '$email', 'Processing', now(), now())";
+    // echo $sqli;
+    //exit; // mysqli_query($conn, $sqli);
+    //lay id vua duoc them vao 
+    if (mysqli_query($conn, $sqli)) {
+        $last_order_id = mysqli_insert_id($conn);
+        //sau do them vao orer detail
+        foreach ($cart as $item) {
+            $masp = $item['id'];
+            $disscounted_price = $item['disscounted_price'];
+            $qty = $item['qty'];
+            $total = $item['qty'] * $item['disscounted_price'];
+            $sqli2 = "insert into order_details values 
+            (0, $last_order_id, $masp,  $disscounted_price, $qty, $total, now(), now())";
+            // echo $sqli2, exit;
+            mysqli_query($conn, $sqli2);
+        }
+    }
 
-    // Chuyển sang trang chọn phương thức thanh toán
-    header("Location: phuongthuc.php");
-    exit;
+    //xoa cart
+    unset($_SESSION["cart"]);
+    header("Location: camon.php");
+
 }
-
-
 
 require_once('components/header.php');
 ?>
+
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
     <div class="container">
@@ -50,23 +66,22 @@ require_once('components/header.php');
 <!-- Checkout Section Begin -->
 <section class="checkout spad">
     <div class="container">
-
         <div class="checkout__form">
             <h4>Thông tin Khách hàng</h4>
-            <form action="#" method="post" id="checkoutForm">
+            <form action="#" method="post" id="checkout-form">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Họ & tên lót<span>*</span></p>
-                                    <input type="text" name="firstname" id="firstname" required>
+                                    <input type="text" name='firstname' required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Tên<span>*</span></p>
-                                    <input type="text" name="lastname" id="lastname" required>
+                                    <input type="text" name='lastname' required>
                                 </div>
                             </div>
                         </div>
@@ -74,21 +89,20 @@ require_once('components/header.php');
                         <div class="checkout__input">
                             <p>Địa chỉ nhận hàng:<span>*</span></p>
                             <input type="text" placeholder="Địa chỉ" class="checkout__input__add" name="address"
-                                id="address" required>
+                                required>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Số điện thoại:<span>*</span></p>
-                                    <input type="tel" name="phone" id="phone" required pattern="[0-9]{10,11}"
-                                        title="Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số)">
+                                    <input type="text" name="phone" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Email:</p>
-                                    <input type="email" name="email" id="email">
+                                    <input type="email" name="email">
                                 </div>
                             </div>
                         </div>
@@ -100,71 +114,135 @@ require_once('components/header.php');
                             <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
                             <ul>
                                 <?php
-                                $cart = $_SESSION['cart'] ?? [];
                                 $total = 0;
-                                foreach ($cart as $item) {
-                                    $total += $item['qty'] * $item['disscounted_price'];
+                                foreach ($cart as $item):
+                                    $subtotal = $item['qty'] * $item['disscounted_price'];
+                                    $total += $subtotal;
                                     ?>
-                                    <li>
-                                        <?= htmlspecialchars($item['name']) ?> <span>
-                                            <?= number_format($item['disscounted_price'] * $item['qty'], 0, '', '.') . " VNĐ" ?>
-                                        </span>
+                                    <li><?= $item['name'] ?> <span><?= number_format($subtotal, 0, '', '.') ?> VNĐ</span>
                                     </li>
-                                <?php } ?>
+                                <?php endforeach; ?>
                             </ul>
-
-                            <div class="checkout__order__total">Tổng tiền: <span>
-                                    <?= number_format($total, 0, '', '.') . " VNĐ" ?>
-                                </span>
+                            <div class="checkout__order__total">Tổng tiền:
+                                <span><?= number_format($total, 0, '', '.') ?> VNĐ</span>
                             </div>
 
-                            <!-- Cảnh báo nếu giỏ hàng trống -->
-                            <?php if ($total == 0): ?>
-                                <p style="color: red; margin-top: 10px;">Bạn chưa có sản phẩm nào trong giỏ hàng!</p>
-                            <?php endif; ?>
+                            <!-- Thêm phương thức thanh toán -->
+                            <div class="checkout__input">
+                                <p>Phương thức thanh toán:<span>*</span></p>
+                                <div class="payment-options">
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment_method" value="momo">
+                                        <span>Thanh toán bằng Momo</span>
+                                    </label>
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment_method" value="vnpay">
+                                        <span>Thanh toán qua VNPay</span>
+                                    </label>
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment_method" value="cod">
+                                        <span>Thanh toán khi nhận hàng (COD)</span>
+                                    </label>
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment_method" value="paypal">
+                                        <span>Thanh toán qua PayPal</span>
+                                    </label>
+                                </div>
+                            </div>
 
-                            <!-- Nút Đặt hàng bị disable nếu giỏ hàng trống -->
-                            <button type="submit" class="site-btn" name="btDathang" id="submitBtn" <?= ($total == 0) ? 'disabled' : '' ?>>Đặt hàng</button>
+                            <button type="submit" class="site-btn" name="btDathang" id="submit-btn" disabled>Đặt
+                                hàng</button>
                         </div>
                     </div>
                 </div>
             </form>
-
-            <script>
-                const firstname = document.getElementById('firstname');
-                const lastname = document.getElementById('lastname');
-                const address = document.getElementById('address');
-                const phone = document.getElementById('phone');
-                const submitBtn = document.getElementById('submitBtn');
-
-                function validateForm() {
-                    const isFirstNameValid = firstname.value.trim() !== "";
-                    const isLastNameValid = lastname.value.trim() !== "";
-                    const isAddressValid = address.value.trim() !== "";
-                    const isPhoneValid = /^[0-9]{10,11}$/.test(phone.value);
-
-                    // Nếu nút đã bị disable từ PHP vì giỏ hàng trống, không bật lại
-                    if (submitBtn.hasAttribute('disabled') && submitBtn.getAttribute('disabled') === 'disabled') return;
-
-                    // Chỉ bật nếu các trường hợp lệ
-                    submitBtn.disabled = !(isFirstNameValid && isLastNameValid && isAddressValid && isPhoneValid);
-                }
-
-                [firstname, lastname, address, phone].forEach(input => {
-                    input.addEventListener('input', validateForm);
-                });
-
-                validateForm(); // Kiểm tra ban đầu khi trang tải
-            </script>
-
-
         </div>
     </div>
 </section>
 <!-- Checkout Section End -->
 
-<!-- Footer Section Begin -->
-<?php
+<style>
+    .payment-options {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
 
-require_once('components/footer.php');
-?>
+    .payment-option {
+        border: 1px solid #ccc;
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background-color: #fff;
+        font-size: 14px;
+    }
+
+    .payment-option:hover {
+        background-color: #f0f0f0;
+        border-color: #888;
+    }
+
+    .payment-option input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border: 2px solid #7fad39;
+        border-radius: 50%;
+        /* Đảm bảo hình tròn */
+        background-color: #fff;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .payment-option input[type="radio"]::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background-color: #7fad39;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        border-radius: 50%;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .payment-option input[type="radio"]:checked::before {
+        transform: translate(-50%, -50%) scale(1);
+    }
+</style>
+
+
+<script>
+    // Kích hoạt nút đặt hàng nếu đã điền đủ thông tin
+    const form = document.getElementById('checkout-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function checkFormValid() {
+        const firstname = form.firstname.value.trim();
+        const lastname = form.lastname.value.trim();
+        const phone = form.phone.value.trim();
+        const address = form.address.value.trim();
+        const payment = form.querySelector('input[name=\"payment_method\"]:checked');
+
+        submitBtn.disabled = !(firstname && lastname && phone && address && payment);
+    }
+
+    form.addEventListener('input', checkFormValid);
+    form.addEventListener('change', checkFormValid);
+</script>
+
+<?php require_once('components/footer.php'); ?>

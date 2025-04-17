@@ -33,9 +33,8 @@
 html,
 body {
 	height: 100%;
-	font-family: "Cairo", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	font-smoothing: antialiased;
+	font-family: 'Roboto', sans-serif;
+
 }
 
 h1,
@@ -47,7 +46,7 @@ h6 {
 	margin: 0;
 	color: #111111;
 	font-weight: 400;
-	font-family: "Cairo", sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
 
 h1 {
@@ -76,7 +75,7 @@ h6 {
 
 p {
 	font-size: 16px;
-	font-family: "Cairo", sans-serif;
+	font-family: 'Roboto', sans-serif;
 	color: #6f6f6f;
 	font-weight: 400;
 	line-height: 26px;
@@ -560,9 +559,6 @@ ol {
   Hero
 -----------------------*/
 
-.hero {
-	padding-bottom: 50px;
-}
 
 .hero.hero-normal {
 	padding-bottom: 30px;
@@ -605,15 +601,7 @@ ol {
 	color: #ffffff;
 }
 
-.hero__categories__all:after {
-	position: absolute;
-	right: 18px;
-	top: 9px;
-	content: "3";
-	font-family: "ElegantIcons";
-	font-size: 18px;
-	color: #ffffff;
-}
+
 
 .hero__categories ul {
 	border: 1px solid #ebebeb;
@@ -1702,7 +1690,7 @@ ol {
 
 .product__details__text .product__details__price {
 	font-size: 30px;
-	color: #dd2222;
+	color: #000;
 	font-weight: 600;
 	margin-bottom: 15px;
 }

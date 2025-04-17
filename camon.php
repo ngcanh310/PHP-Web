@@ -30,7 +30,6 @@ require_once('components/header.php');
         <div class="checkout__form text-center">
             <h4 class="mb-4">🎉 Cảm ơn bạn đã đặt hàng!</h4>
             <p>Chúng tôi đã nhận được đơn hàng của bạn và sẽ liên hệ trong thời gian sớm nhất để xác nhận.</p>
-            <p>Bạn có thể kiểm tra email để xem thông tin đơn hàng (nếu có cung cấp).</p>
             <a href="index.php" class="site-btn mt-4">Tiếp tục mua sắm</a>
         </div>
     </div>
