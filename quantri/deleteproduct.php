@@ -14,7 +14,7 @@ $row = mysqli_fetch_assoc($rs);
 $images_arr = explode(';', $row['images']);
 // print_r($images_arr); exit;
 //xoa cac anh trong thu muc luu
-foreach($images_arr as $img){
+foreach ($images_arr as $img) {
     unlink($img);
 }
 
@@ -22,6 +22,6 @@ foreach($images_arr as $img){
 $sql_str = "delete from products where id=$delid";
 mysqli_query($conn, $sql_str);
 
-//trở về trang liệt kê brands
+//trở về trang liệt kê san pham
 header("location: listsanpham.php");
 

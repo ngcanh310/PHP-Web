@@ -17,13 +17,10 @@ disscounted_price,
 products.name as pname,
 images,
 categories.name as cname,
-brands.name as bname,
 products.status as pstatus
-from products, categories, brands 
+from products, categories
 where products.category_id=categories.id 
-and products.brand_id = brands.id 
 and products.id=$id";
-// echo $sql_str; exit;   //debug cau lenh
 
 $res = mysqli_query($conn, $sql_str);
 
@@ -39,13 +36,9 @@ if (isset($_POST['btnUpdate'])){
    $giagoc = $_POST['giagoc'];
    $giaban = $_POST['giaban'];
    $danhmuc = $_POST['danhmuc'];
-   $thuonghieu = $_POST['thuonghieu'];
-   $giaban = $_POST['giaban'];
 
    //xu ly hinh anh
    $countfiles = count($_FILES['anhs']['name']);
-//    print_r( $_FILES['anhs']['name']);
-//    echo str_length($_FILES['anhs']['name'][0]); exit;
 
    if (!empty($_FILES['anhs']['name'][0])){//có chọn hình ảnh mới - xóa các ảnh cũ
     //xoa anh cu
@@ -53,7 +46,7 @@ if (isset($_POST['btnUpdate'])){
     foreach($images_arr as $img){
         unlink($img);
     }
-    
+
     //them anh moi 
     $imgs = '';
     for($i=0;$i<$countfiles;$i++){
@@ -61,7 +54,6 @@ if (isset($_POST['btnUpdate'])){
 
         ## Location
         $location = "uploads/".uniqid().$filename;
-                    //pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] ) : mixed
         $extension = pathinfo($location,PATHINFO_EXTENSION);
         $extension = strtolower($extension);
 
@@ -71,12 +63,7 @@ if (isset($_POST['btnUpdate'])){
         $response = 0;
         ## Check file extension
         if(in_array(strtolower($extension), $valid_extensions)) {
-
-            // them vao CSDL - them thah cong moi upload anh len
-            ## Upload file
-                                //$_FILES['file']['tmp_name']: $_FILES['file']['tmp_name'] - The temporary filename of the file in which the uploaded file was stored on the server.
             if(move_uploaded_file($_FILES['anhs']['tmp_name'][$i],$location)){
-
                 $imgs .= $location . ";";
             }
         }
@@ -84,9 +71,6 @@ if (isset($_POST['btnUpdate'])){
     }
     $imgs = substr($imgs, 0, -1);
 
-    // echo substr($imgs, 0, -1); exit;
-    
-    // cau lenh them vao bang
     $sql_str = "UPDATE `products` 
         SET `name`='$name', 
         `slug`='$slug', 
@@ -96,8 +80,7 @@ if (isset($_POST['btnUpdate'])){
         `price`=$giagoc, 
         `disscounted_price`=$giaban, 
         `images`='$imgs', 
-        `category_id`=$danhmuc, 
-        `brand_id`=$thuonghieu 
+        `category_id`=$danhmuc 
         WHERE `id`=$id
         ";
    } else {
@@ -109,19 +92,13 @@ if (isset($_POST['btnUpdate'])){
         `stock`=$stock, 
         `price`=$giagoc, 
         `disscounted_price`=$giaban, 
-        `category_id`=$danhmuc, 
-        `brand_id`=$thuonghieu
+        `category_id`=$danhmuc
         WHERE `id`=$id
         ";
    }
-   
 
-//    echo $sql_str; exit;
-
-   //thuc thi cau lenh
    mysqli_query($conn, $sql_str);
 
-   //tro ve trang 
    header("location: ./listsanpham.php");
 } else {
     require('includes/header.php');
@@ -197,7 +174,6 @@ foreach($arr as $img)
                         <select class="form-control" name="danhmuc">
                             <option>Chọn danh mục</option>
                             <?php 
-    // require('../db/conn.php');
     $sql_str = "select * from categories order by name";
     $result = mysqli_query($conn, $sql_str);
     while ($row = mysqli_fetch_assoc($result)){
@@ -209,29 +185,6 @@ foreach($arr as $img)
 
             ?>
         ><?php echo $row['name'];?></option>
-        <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                    <label class="form-label">Thương hiệu:</label>
-                   
-                        <select class="form-control" name="thuonghieu">
-                        <option>Chọn thương hiệu</option>
-
-                        <?php 
-    // require('../db/conn.php');
-    $sql_str = "select * from brands order by name";
-    $result = mysqli_query($conn, $sql_str);
-    while ($row = mysqli_fetch_assoc($result)){
-        ?>
-            <option value="<?php echo $row['id'];?>"
-            
-                <?php
-                if ($row['name'] == $product['bname'])
-                    echo "selected=true";
-
-                ?>
-            ><?php echo $row['name'];?></option>
         <?php } ?>
                         </select>
                     </div>

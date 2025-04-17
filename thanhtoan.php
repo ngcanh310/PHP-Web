@@ -11,13 +11,14 @@ require_once('./db/conn.php');
 
 if (isset($_POST['btDathang'])) {
     //lay thong tin khach hang tu form
+    $id = $_SESSION['user']['id'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $address = $_POST['address'];
     //tao du lieu cho order
-    $sqli = "insert into orders values (0, 0, '$firstname', '$lastname', '$address', '$phone', '$email', 'Processing', now(), now())";
+    $sqli = "insert into orders values (0, $id, '$firstname', '$lastname', '$address', '$phone', '$email', 'Processing', now(), now())";
     // echo $sqli;
     //exit; // mysqli_query($conn, $sqli);
     //lay id vua duoc them vao 

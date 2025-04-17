@@ -29,7 +29,7 @@ function anhdaidien($arrstr,$height){
                     <th>Tên sản phẩm</th>
                     <th>Ảnh đại diện</th>
                     <th>Danh mục</th>
-                    <th>Thương hiệu</th>                    
+                                    
                     <th>Trạng thái</th>
                     <th>Hành động</th>
                 </tr>
@@ -39,7 +39,7 @@ function anhdaidien($arrstr,$height){
                     <th>Tên sản phẩm</th>
                     <th>Ảnh đại diện</th>
                     <th>Danh mục</th>
-                    <th>Thương hiệu</th>                    
+                                     
                     <th>Trạng thái</th>
                     <th>Hành động</th>
                 </tr>
@@ -47,14 +47,16 @@ function anhdaidien($arrstr,$height){
             <tbody>
             <?php 
     require('../db/conn.php');
-    $sql_str = "select 
-    products.id as pid,
-    products.name as pname,
+    $sql_str = "SELECT 
+    products.id AS pid,
+    products.name AS pname,
     images,
-    categories.name as cname,
-    brands.name as bname,
-    products.status as pstatus
-    from products, categories, brands where products.category_id=categories.id and products.brand_id = brands.id order by products.name";
+    categories.name AS cname,
+    products.status AS pstatus
+FROM products
+JOIN categories ON products.category_id = categories.id
+ORDER BY products.name
+";
     $result = mysqli_query($conn, $sql_str);
     while ($row = mysqli_fetch_assoc($result)){
         ?>
@@ -64,7 +66,7 @@ function anhdaidien($arrstr,$height){
                 <td><?=$row['pname']?></td>
                 <td><?=anhdaidien($row['images'], "100px")?></td>
                 <td><?=$row['cname']?></td>
-                <td><?=$row['bname']?></td>
+                
                 <td><?=$row['pstatus']?></td>
                 <td>
                     <a class="btn btn-warning" href="editproduct.php?id=<?=$row['pid']?>">Edit</a>  
