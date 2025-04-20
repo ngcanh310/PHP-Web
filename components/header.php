@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Đặc sản Quảng Ngãi | Các món truyền thống đặc trưng Quảng Ngãi</title>
+    <title>Đặc sản vùng quê | Các món truyền thống đặc trưng vùng quê</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -83,7 +83,7 @@
         <div class="humberger__menu__contact">
             <ul>
                 <li><i class="fa fa-envelope"></i> shopdacsanquangngai@gmail.com</li>
-                <li>Shop Đặc sản Quảng Ngãi</li>
+                <li>Shop Đặc sản vùng quê</li>
             </ul>
         </div>
     </div>
@@ -91,14 +91,14 @@
 
     <!-- Header Section Begin -->
     <header class="header">
-        <div class="header__top">
+        <div class="header__top" style="margin-bottom: 10px;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> shopdacsanquangngai@gmail.com</li>
-                                <li>Shop Đặc sản Quảng Ngãi</li>
+                                <li><i class="fa fa-envelope"></i> shopdacsanvungque@gmail.com</li>
+                                <li>Shop Đặc sản vùng quê</li>
                             </ul>
                         </div>
                     </div>
@@ -254,18 +254,9 @@
                 <!-- <div class="col-lg-6"> -->
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="/">Trang chủ</a></li>
+                            <li><a href="/">Trang chủ</a></li>
                             <li><a href="/shop.php">Cửa hàng</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Tin tức</a></li>
-                            <li><a href="./contact.html">Liên hệ</a></li>
+                            <li><a href="/blog.php">Tin tức</a></li>
                         </ul>
                     </nav>
                 <!-- </div> -->
@@ -275,10 +266,10 @@
        ?>
  <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
                         <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
+                            <span>Tươi Ngon</span>
+                            <h2>Rau Củ Quả <br />100% Tự Nhiên</h2>
+                            <p>Miễn Phí Vận Chuyển</p>
+                            <a href="shop.php" class="primary-btn">MUA NGAY</a>
                         </div>
                     </div>
 <?php
@@ -309,3 +300,13 @@
             text-decoration: underline;
         }
     </style>
+
+    <script>
+    const links = document.querySelectorAll("ul li a");
+    const current = window.location.pathname;
+    links.forEach(link => {
+        if (link.getAttribute("href") === current) {
+            link.parentElement.classList.add("active");
+        }
+    });
+</script>

@@ -6,12 +6,12 @@
                 <div class="footer__about">
                     <h6>Liên hệ</h6>
                     <div class="footer__about__logo">
-                        <a href="./index.html"><img src="../img/logo.png" alt=""></a>
+                        <a href="./index.php"><img src="../img/logo.png" alt=""></a>
                     </div>
                     <ul>
-                        <li>Địa chỉ: Đội 2, thôn Đồng Viên, xã Nghĩa Hiệp, huyện Tư Nghĩa, tỉnh Quảng Ngãi</li>
-                        <li>Số điện thoại: 0942.814.192</li>
-                        <li>Email: votuongvienvo@gmail.com</li>
+                        <li>Địa chỉ: Đại Mỗ, Vạn Phúc, Hà Đông</li>
+                        <li>Số điện thoại: 0981346672</li>
+                        <li>Email: ngocank310@gmail.com</li>
                     </ul>
                 </div>
             </div>
@@ -49,9 +49,7 @@
                     <div class="footer__copyright__text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This
-                            template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>
