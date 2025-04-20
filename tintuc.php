@@ -68,74 +68,45 @@ $anh = $row['avatar'];
                         <h4>Tin mới</h4>
                         <div class="blog__sidebar__recent">
 
-                        <?php
+                            <?php
 
                             $sql_str3 = "select * from news order by created_at desc limit 0, 3";
                             $result3 = mysqli_query($conn, $sql_str3);
                             while ($row3 = mysqli_fetch_assoc($result3)) {
                                 ?>
-                            <a href="#" class="blog__sidebar__recent__item">
-                                <div class="blog__sidebar__recent__item__pic">
-                                    <img src="<?='quantri/'.$row3['avatar']?>" width="70px" alt="">
-                                </div>
-                                <div class="blog__sidebar__recent__item__text">
-                                    <h6><?=$row3['title']?></h6>
-                                    <span><?=$row3['created_at']?></span>
-                                </div>
-                            </a>
+                                <a href="#" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="<?= 'quantri/' . $row3['avatar'] ?>" width="70px" alt="">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6><?= $row3['title'] ?></h6>
+                                        <span><?= $row3['created_at'] ?></span>
+                                    </div>
+                                </a>
                             <?php } ?>
-                            
+
                         </div>
                     </div>
                     <div class="blog__sidebar__item">
                         <h4>Tìm kiếm</h4>
                         <div class="blog__sidebar__item__tags">
-                        <?php 
-                        $sql_str2 = "select * from newscategories order by id";
-                        $result2 = mysqli_query($conn, $sql_str2);
-                        while ($row2 = mysqli_fetch_assoc($result2)) { ?>
-                            <a href="#"><?=$row2['name']?></a>
-                        <?php } ?>
-                            
+                            <?php
+                            $sql_str2 = "select * from newscategories order by id";
+                            $result2 = mysqli_query($conn, $sql_str2);
+                            while ($row2 = mysqli_fetch_assoc($result2)) { ?>
+                                <a href="#"><?= $row2['name'] ?></a>
+                            <?php } ?>
+
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
                 <div class="blog__details__text">
-                    <img src="<?='quantri/'.$row['avatar']?>" alt="">
-                    <?=$row['description']?>
+                    <img src="<?= 'quantri/' . $row['avatar'] ?>" alt="">
+
+                    <div><?= $row['description'] ?></div>
                 </div>
-                <!-- <div class="blog__details__content">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="blog__details__author">
-                                <div class="blog__details__author__pic">
-                                    <img src="img/blog/details/details-author.jpg" alt="">
-                                </div>
-                                <div class="blog__details__author__text">
-                                    <h6>Michael Scofield</h6>
-                                    <span>Admin</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="blog__details__widget">
-                                <ul>
-                                    <li><span>Categories:</span> Food</li>
-                                    <li><span>Tags:</span> All, Trending, Cooking, Healthy Food, Life Style</li>
-                                </ul>
-                                <div class="blog__details__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-linkedin"></i></a>
-                                    <a href="#"><i class="fa fa-envelope"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -154,29 +125,29 @@ $anh = $row['avatar'];
         </div>
         <div class="row">
             <?php
-            $sql_str4 = "select * from news where newscategory_id=".$row["newscategory_id"]." and id <> " . $row['id'];
+            $sql_str4 = "select * from news where newscategory_id=" . $row["newscategory_id"] . " and id <> " . $row['id'];
             // echo $sql_str4;
             // exit;
             $result4 = mysqli_query($conn, $sql_str4);
             while ($row4 = mysqli_fetch_assoc($result4)) {
-            ?>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic">
-                        <img src="<?='quantri/'.$row4['avatar']?>" alt="">
-                    </div>
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i><?=$row4['created_at']?></li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="tintuc.php?id=<?=$row4['id']?>"><?=$row4['title']?></a></h5>
-                        <?=$row4['description']?>
+                ?>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="<?= 'quantri/' . $row4['avatar'] ?>" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i><?= $row4['created_at'] ?></li>
+                                <li><i class="fa fa-comment-o"></i> 5</li>
+                            </ul>
+                            <h5><a href="tintuc.php?id=<?= $row4['id'] ?>"><?= $row4['title'] ?></a></h5>
+                            <?= $row4['description'] ?>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php } ?>
-           
+
         </div>
     </div>
 </section>
