@@ -10,8 +10,14 @@ if (isset($_SESSION['cart'])) {
 require_once('./db/conn.php');
 
 if (isset($_POST['btDathang'])) {
+    if (isset($_SESSION['user'])) {
+        // Lấy thông tin khách hàng nếu đã đăng nhập
+        $id = $_SESSION['user']['id'];
+    } else {
+        // Nếu chưa đăng nhập, set id = 0 (khách hàng)
+        $id = 0;
+    }
     //lay thong tin khach hang tu form
-    $id = $_SESSION['user']['id'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $phone = $_POST['phone'];

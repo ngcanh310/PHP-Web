@@ -2,7 +2,7 @@
 session_start();
 //kiem tra neu khong co session user thi khogn cho phep vao trang quan tri
 // chuyenr qua trang login.php
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user_admin"])) {
   header("Location: login.php");
   die();
 }

@@ -119,6 +119,14 @@ if (isset($_POST['login'])) {
 <body>
     <div class="form-box">
         <h2>Đăng nhập</h2>
+        <p style="text-align:center; margin-top:10px;">
+            <?php
+            unset($_SESSION['user']);
+            ?>
+            <a href="index.php" style="color:#007bff; text-decoration:none;">
+                ➤ Tiếp tục với tư cách là khách
+            </a>
+        </p>
         <?php foreach ($errors as $e)
             echo "<div class='error'>$e</div>"; ?>
         <?php if ($success)

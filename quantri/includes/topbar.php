@@ -170,9 +170,9 @@
         aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
           <?php
-          $user = $_SESSION['user'];
+          $user_admin = $_SESSION['user_admin'];
           // $cart = $_SESSION['cart'];
-          echo $user['name'];
+          echo $user_admin['name'];
           ?>
         </span>
         <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />

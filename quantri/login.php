@@ -16,7 +16,7 @@ if (isset($_POST["btSubmit"])) {
         // echo "<h4>Dang nhap thanh cong</h4>";
         //luu tru thong tin dang nha
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['user'] = $row;
+        $_SESSION['user_admin'] = $row;
         // print_r($_SESSION['user']);
         // exit;
         // chuyen qua trang quan trị

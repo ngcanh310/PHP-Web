@@ -73,36 +73,39 @@ require_once('components/header.php');
 
 <section class="order-section">
     <?php
-    if (!isset($_SESSION['user'])) {
-        echo "<p class='order-empty'>Bạn cần đăng nhập để xem đơn hàng.</p>";
-        exit;
-    }
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (!isset($_SESSION['user'])): ?>
+        <h2 class="order-empty">Bạn cần <a href="login.php">đăng nhập</a> để xem đơn hàng của bạn.</h2>
+    <?php else:
+        // Nếu đã đăng nhập, lấy id người dùng từ session
+        $user_id = $_SESSION['user']['id'];
+        $sql = "SELECT * FROM orders WHERE user_id = $user_id ORDER BY created_at DESC";
+        $result = $conn->query($sql);
 
-    $user_id = $_SESSION['user']['id'];
-    $sql = "SELECT * FROM orders WHERE user_id = $user_id ORDER BY created_at DESC";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0): ?>
-        <h2>🧾 Danh sách đơn hàng của bạn</h2>
-        <table class="order-table">
-            <tr>
-                <th>ID đơn hàng</th>
-                <th>Trạng thái</th>
-                <th>Ngày tạo</th>
-                <th>Ngày cập nhật</th>
-            </tr>
-            <?php while ($row = $result->fetch_assoc()): ?>
+        // Hiển thị đơn hàng nếu có
+        if ($result->num_rows > 0): ?>
+            <h2>🧾 Danh sách đơn hàng của bạn</h2>
+            <table class="order-table">
                 <tr>
-                    <td>#<?php echo $row['id']; ?></td>
-                    <td><?php echo $row['status']; ?></td>
-                    <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
-                    <td><?php echo date("d/m/Y H:i", strtotime($row['updated_at'])); ?></td>
+                    <th>ID đơn hàng</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày cập nhật</th>
                 </tr>
-            <?php endwhile; ?>
-        </table>
-    <?php else: ?>
-        <p class="order-empty">🛒 Bạn chưa có đơn hàng nào.</p>
-    <?php endif; ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td>#<?php echo $row['id']; ?></td>
+                        <td><?php echo $row['status']; ?></td>
+                        <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
+                        <td><?php echo date("d/m/Y H:i", strtotime($row['updated_at'])); ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        <?php else: ?>
+            <h2 class="order-empty">🛒 Bạn chưa có đơn hàng nào.</h2>
+        <?php endif;
+    endif;
+    ?>
 </section>
 
 
