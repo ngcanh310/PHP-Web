@@ -31,6 +31,7 @@ require_once('components/header.php');
             <h4 class="mb-4">🎉 Cảm ơn bạn đã đặt hàng!</h4>
             <p>Chúng tôi đã nhận được đơn hàng của bạn và sẽ liên hệ trong thời gian sớm nhất để xác nhận.</p>
             <a href="index.php" class="site-btn mt-4">Tiếp tục mua sắm</a>
+
         </div>
     </div>
 </section>

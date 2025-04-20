@@ -21,6 +21,16 @@ if (isset($_POST['btDathang'])) {
     $sqli = "insert into orders values (0, $id, '$firstname', '$lastname', '$address', '$phone', '$email', 'Processing', now(), now())";
     // echo $sqli;
     //exit; // mysqli_query($conn, $sqli);
+    // cap nhat kho hang
+    // Lấy số lượng hiện tại trong kho
+    for ($i = 0; $i < count($cart); $i++) {
+        // print_r($cart[$i]);
+        if ($cart[$i]['id'] == $id) {
+            $cart[$i]['qty'] += $qty;
+            $isFound = true;
+            break;
+        }
+    }
     //lay id vua duoc them vao 
     if (mysqli_query($conn, $sqli)) {
         $last_order_id = mysqli_insert_id($conn);
@@ -34,6 +44,10 @@ if (isset($_POST['btDathang'])) {
             (0, $last_order_id, $masp,  $disscounted_price, $qty, $total, now(), now())";
             // echo $sqli2, exit;
             mysqli_query($conn, $sqli2);
+
+            // Trừ số lượng trong kho
+            $sqli3 = "UPDATE products SET stock = stock - $qty WHERE id = $masp";
+            mysqli_query($conn, $sqli3);
         }
     }
 

@@ -99,13 +99,12 @@
                         <h3>
                             <?= $row['name'] ?>
                         </h3>
-                        <div class="product__details__rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-o"></i>
-                            <span>(18 reviews)</span>
+                        <div class="check">
+    <?php if ($row['stock'] == 0): ?>
+                                <span style="color:red;">Hết hàng</span>
+                            <?php else: ?>
+                                Còn lại: <?= $row['stock'] ?>
+                            <?php endif; ?>
                         </div>
                         <div class="product__details__price">
                             <?php if ($row['price'] != $row['disscounted_price']) { ?>
@@ -119,18 +118,20 @@
                         <p>
                             <?= $row['summary'] ?>
                         </p>
-                        <form method="post">
-                            <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1" >
-                                        <input type="hidden" value="1" name="qty">
+                        <?php if ($row['stock'] > 0): ?>
+                            <form method="post">
+                                <div class="product__details__quantity">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="number" value="1" name="qty" min="1" max="<?= $row['stock'] ?>">
+                                        </div>
+                                        <input type="hidden" name="pid" value="<?= $idsp ?>">
                                     </div>
-                                    <input type="hidden" name="pid" value="<?=$idsp?>">
                                 </div>
-                            </div>
-                            <button class="primary-btn" name="atcbtn">Thêm vào giỏ hàng</button>
-                        </form>
+                                <button class="primary-btn" name="atcbtn">Thêm vào giỏ hàng</button>
+                            </form>
+                        <?php endif; ?>
+
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
