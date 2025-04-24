@@ -6,8 +6,11 @@ $errorsLog = [];
 $success = '';
 require('./db/conn.php');
 
+require_once 'vendor/autoload.php'; // Twilio SDK và Composer autoload
 
-
+use Twilio\Rest\Client;
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 // Đăng ký
 if (isset($_POST['register'])) {
     $name = trim($_POST['reg_name']);
@@ -28,7 +31,38 @@ if (isset($_POST['register'])) {
                                     VALUES (?, ?, ?, ?, ?, 'Active', NOW(), NOW())");
             $stmt->bind_param("sssss", $name, $email, $hashed, $phone, $address);
             $stmt->execute();
-            $success = "Đăng ký thành công! Bạn có thể đăng nhập.";
+
+            // Gửi mã OTP qua Twilio
+            $otp = rand(100000, 999999);
+            $_SESSION['otp'] = $otp;
+
+            // Cấu hình Twilio
+            $twilio_sid = $_ENV['TWILIO_SID'];
+            $twilio_token = $_ENV['TWILIO_TOKEN'];
+            $twilio_number = $_ENV['TWILIO_PHONE'];
+
+            try {
+                $client = new Client($twilio_sid, $twilio_token);
+
+                // Định dạng số điện thoại (+84xxxxxxxxx)
+                $formattedPhone = "+84" . ltrim($phone, '0');
+
+                // Gửi tin nhắn
+                $message = $client->messages->create(
+                    $formattedPhone,
+                    [
+                        'from' => $twilio_number,
+                        'body' => "Mã OTP của bạn là: $otp"
+                    ]
+                );
+
+                // echo "Tin nhắn đã được gửi với SID: " . $message->sid;
+                header("Location: verify_otp.php");
+                exit();
+
+            } catch (Exception $e) {
+                $errorsLog[] = "Không thể gửi mã OTP: " . $e->getMessage();
+            }
         }
     }
 }
@@ -125,6 +159,10 @@ if (isset($_POST['login'])) {
             unset($_SESSION['user']);
             ?>
         </p>
+
+        <?php if (isset($_SESSION['otp_success'])): ?>
+            <p class="success">Mã OTP chính xác! Bạn đã xác minh thành công</p>
+        <?php endif; ?>
         <?php foreach ($errors as $e)
             echo "<div class='error'>$e</div>"; ?>
         <?php if ($success)
