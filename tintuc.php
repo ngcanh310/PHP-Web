@@ -1,15 +1,12 @@
-<?php
-session_start();
+<?php session_start();
 $is_homepage = false;
 require_once('components/header.php');
-
 require_once('./db/conn.php');
 $idsp = $_GET['id'];
 $sql_str = "select * from news where id=$idsp";
 $result = mysqli_query($conn, $sql_str);
 $row = mysqli_fetch_assoc($result);
-$anh = $row['avatar'];
-?>
+$anh = $row['avatar']; ?>
 <!-- Blog Details Hero Begin -->
 <section class="blog-details-hero set-bg" data-setbg="img/blog/details/details-hero.jpg">
     <div class="container">
@@ -24,7 +21,6 @@ $anh = $row['avatar'];
                         <li>
                             <?= $row['created_at'] ?>
                         </li>
-                        <li>8 Comments</li>
                     </ul>
                 </div>
             </div>
@@ -102,12 +98,17 @@ $anh = $row['avatar'];
                 </div>
             </div>
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
-                <div class="blog__details__text">
-                    <img src="<?= 'quantri/' . $row['avatar'] ?>" alt="">
-
-                    <div><?= $row['description'] ?></div>
+                <div class="blog__details__text enhanced-blog">
+                    <div class="blog-image-wrapper">
+                        <img src="<?= 'quantri/' . $row['avatar'] ?>" alt="Hình ảnh tin tức">
+                    </div>
+                    <div class="blog-description">
+                        <?= $row['description'] ?>
+                    </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </section>
@@ -142,7 +143,7 @@ $anh = $row['avatar'];
                                 <li><i class="fa fa-comment-o"></i> 5</li>
                             </ul>
                             <h5><a href="tintuc.php?id=<?= $row4['id'] ?>"><?= $row4['title'] ?></a></h5>
-                            <?= $row4['description'] ?>
+                            <?= $row4['sumary'] ?>
                         </div>
                     </div>
                 </div>
@@ -151,6 +152,40 @@ $anh = $row['avatar'];
         </div>
     </div>
 </section>
+
+<style>
+    .enhanced-blog {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .blog-image-wrapper {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .blog-image-wrapper img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .blog-image-wrapper img:hover {
+        transform: scale(1.03);
+    }
+
+    .blog-description {
+        font-size: 17px;
+        line-height: 1.8;
+        color: #333;
+        text-align: justify;
+    }
+</style>
+
 <!-- Related Blog Section End -->
 <!-- Related Product Section End -->
 <?php require_once('components/footer.php'); ?>

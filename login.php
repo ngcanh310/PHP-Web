@@ -2,6 +2,7 @@
 
 session_start();
 $errors = [];
+$errorsLog = [];
 $success = '';
 require('./db/conn.php');
 
@@ -16,11 +17,11 @@ if (isset($_POST['register'])) {
     $address = trim($_POST['reg_address']);
 
     if ($name == '' || $email == '' || $password == '' || $phone == '' || $address == '') {
-        $errors[] = "Vui lòng điền đầy đủ thông tin.";
+        $errorsLog[] = "Vui lòng điền đầy đủ thông tin.";
     } else {
         $check = $conn->query("SELECT * FROM users WHERE email = '$email'");
         if ($check->num_rows > 0) {
-            $errors[] = "Email đã được sử dụng.";
+            $errorsLog[] = "Email đã được sử dụng.";
         } else {
             $hashed = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (name, email, password, phone, address, status, created_at, updated_at)
@@ -123,9 +124,6 @@ if (isset($_POST['login'])) {
             <?php
             unset($_SESSION['user']);
             ?>
-            <a href="index.php" style="color:#007bff; text-decoration:none;">
-                ➤ Tiếp tục với tư cách là khách
-            </a>
         </p>
         <?php foreach ($errors as $e)
             echo "<div class='error'>$e</div>"; ?>
@@ -136,10 +134,16 @@ if (isset($_POST['login'])) {
             <input type="password" name="login_password" placeholder="Mật khẩu" required>
             <input type="submit" name="login" value="Đăng nhập">
         </form>
-
+        <div style="text-align: center;">
+            <a href="index.php" style="color:#007bff; text-decoration:none;">
+                ➤ Tiếp tục với tư cách là khách
+            </a>
+        </div>
         <hr>
         <h2>Đăng ký</h2>
         <form method="post">
+            <?php foreach ($errorsLog as $e)
+                echo "<div class='error'>$e</div>"; ?>
             <input type="text" name="reg_name" placeholder="Họ tên" required>
             <input type="email" name="reg_email" placeholder="Email" required>
             <input type="password" name="reg_password" placeholder="Mật khẩu" required>

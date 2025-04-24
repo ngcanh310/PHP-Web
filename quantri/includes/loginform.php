@@ -38,8 +38,8 @@
                             <div class="col-lg-8  offset-lg-2">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login Form</h1>
-                                        <?php echo "<h4 class='alert alert-danger'>$errorMsg</h4>" ?>
+                                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+
                                     </div>
                                     <form class="user" method="post">
                                         <div class="form-group">
@@ -59,7 +59,7 @@
                                         <hr>
 
                                     </form>
-
+                                    <?php echo "<h4 >$errorMsg</h4>" ?>
                                 </div>
                             </div>
                         </div>
