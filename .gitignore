@@ -1,1 +1,2 @@
 .env
+git commit -m "Thêm .env vào .gitignore"

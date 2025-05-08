@@ -15,6 +15,11 @@ require('includes/header.php');
                         </div>
                         <form class="user" method="post" action="addproduct.php" enctype="multipart/form-data">
                             <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="id" name="id"
+                                    aria-describedby="emailHelp" placeholder="Mã sản phẩm">
+                            </div>
+
+                            <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="name" name="name"
                                     aria-describedby="emailHelp" placeholder="Tên sản phẩm">
                             </div>

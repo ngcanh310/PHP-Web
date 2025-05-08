@@ -26,6 +26,7 @@ function anhdaidien($arrstr,$height){
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th>Mã sản phẩm</th>
                     <th>Tên sản phẩm</th>
                     <th>Ảnh đại diện</th>
                     <th>Danh mục</th>
@@ -36,6 +37,7 @@ function anhdaidien($arrstr,$height){
             </thead>
             <tfoot>
                 <tr>
+                    <th>Mã sản phẩm</th>
                     <th>Tên sản phẩm</th>
                     <th>Ảnh đại diện</th>
                     <th>Danh mục</th>
@@ -63,6 +65,7 @@ ORDER BY products.name
 
         
             <tr>
+                <td><?= $row['pid'] ?></td>
                 <td><?=$row['pname']?></td>
                 <td><?=anhdaidien($row['images'], "100px")?></td>
                 <td><?=$row['cname']?></td>

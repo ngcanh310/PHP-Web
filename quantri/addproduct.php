@@ -2,6 +2,7 @@
 require('../db/conn.php');
 
 // Lấy dữ liệu từ form
+$id = $_POST['id'];
 $name = $_POST['name'];
 $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
 $sumary = $_POST['sumary'];
@@ -31,7 +32,7 @@ $imgs = rtrim($imgs, ";");
 // Câu lệnh thêm vào bảng products (không có brand_id)
 $sql_str = "INSERT INTO `products` (`id`, `name`, `slug`, `description`, `summary`, `stock`, `price`, `disscounted_price`, `images`, `category_id`, `status`, `created_at`, `updated_at`) 
 VALUES 
-(NULL, '$name', '$slug', '$description', '$sumary', $stock, $giagoc, $giaban, '$imgs', $danhmuc, 'Active', NULL, NULL);";
+('$id', '$name', '$slug', '$description', '$sumary', $stock, $giagoc, $giaban, '$imgs', $danhmuc, 'Active', NULL, NULL);";
 
 // Thực thi
 mysqli_query($conn, $sql_str);

@@ -28,6 +28,7 @@ $product = mysqli_fetch_assoc($res);
 
 if (isset($_POST['btnUpdate'])){
    //lay du lieu tu form
+   $idnew = $_POST['id'];
    $name = $_POST['name'];
    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
    $summary = $_POST['summary'];
@@ -71,33 +72,37 @@ if (isset($_POST['btnUpdate'])){
     }
     $imgs = substr($imgs, 0, -1);
 
-    $sql_str = "UPDATE `products` 
-        SET `name`='$name', 
-        `slug`='$slug', 
-        `description`='$description', 
-        `summary`='$summary', 
-        `stock`=$stock, 
-        `price`=$giagoc, 
-        `disscounted_price`=$giaban, 
-        `images`='$imgs', 
-        `category_id`=$danhmuc 
-        WHERE `id`=$id
-        ";
+    $update_order_details = "UPDATE order_details SET product_id = $idnew WHERE product_id = $id";
+    mysqli_query($conn, $update_order_details);
+
+    $update_product = "UPDATE products SET 
+    id = $idnew,
+    name = '$name',
+    slug = '$slug',
+    description = '$description',
+    summary = '$summary',
+    stock = $stock,
+    price = $giagoc,
+    disscounted_price = $giaban,
+    images = '$imgs',
+    category_id = $danhmuc,
+    WHERE id = $id";
+
    } else {
-    $sql_str = "UPDATE `products` 
-        SET `name`='$name', 
-        `slug`='$slug', 
-        `description`='$description', 
-        `summary`='$summary', 
-        `stock`=$stock, 
-        `price`=$giagoc, 
-        `disscounted_price`=$giaban, 
-        `category_id`=$danhmuc
-        WHERE `id`=$id
-        ";
+        $update_product = "UPDATE products SET 
+    id = $idnew,
+    name = '$name',
+    slug = '$slug',
+    description = '$description',
+    summary = '$summary',
+    stock = $stock,
+    price = $giagoc,
+    disscounted_price = $giaban,
+    category_id = $danhmuc
+    WHERE id = $id";
    }
 
-   mysqli_query($conn, $sql_str);
+   mysqli_query($conn, $update_product);
 
    header("location: ./listsanpham.php");
 } else {
@@ -115,7 +120,13 @@ if (isset($_POST['btnUpdate'])){
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Cập nhật sản phẩm</h1>
                     </div>
-                    <form class="user" method="post" action="#" enctype="multipart/form-data">                        
+                    <form class="user" method="post" action="#" enctype="multipart/form-data">   
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user"
+                            id="id" name="id" aria-describedby="emailHelp"
+                            placeholder="Mã sản phẩm"
+                            value="<?= $product['pid'] ?>">
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control form-control-user"
                             id="name" name="name" aria-describedby="emailHelp"

@@ -1,27 +1,37 @@
 <?php
-
-//lay id goi den
+// Lấy ID sản phẩm cần xóa
 $delid = $_GET['id'];
 
-//ket noi csdl
+// Kết nối CSDL
 require('../db/conn.php');
-//tim cac hinh anh cua san pham va xoa
-$sql1 = "select images from products where id=$delid";
-$rs = mysqli_query($conn, $sql1);
-$row = mysqli_fetch_assoc($rs);
 
-//danh sach cac anh
-$images_arr = explode(';', $row['images']);
-// print_r($images_arr); exit;
-//xoa cac anh trong thu muc luu
-foreach ($images_arr as $img) {
-    unlink($img);
+// 1. Tìm các hình ảnh của sản phẩm để xóa file ảnh vật lý
+$sql1 = "SELECT images FROM products WHERE id=$delid";
+$rs = mysqli_query($conn, $sql1);
+
+if ($rs && mysqli_num_rows($rs) > 0) {
+    $row = mysqli_fetch_assoc($rs);
+
+    // Danh sách các ảnh (tách từ chuỗi phân cách ;)
+    $images_arr = explode(';', $row['images']);
+
+    // Xóa ảnh vật lý khỏi thư mục
+    foreach ($images_arr as $img) {
+        if (!empty($img) && file_exists($img)) {
+            unlink($img);
+        }
+    }
+
+    // 2. Xóa các chi tiết đơn hàng liên quan đến sản phẩm
+    $sql_delete_details = "DELETE FROM order_details WHERE product_id = $delid";
+    mysqli_query($conn, $sql_delete_details);
+
+    // 3. Xóa sản phẩm khỏi bảng products
+    $sql_delete_product = "DELETE FROM products WHERE id = $delid";
+    mysqli_query($conn, $sql_delete_product);
 }
 
-//xoa du lieu san pham trong CSDL
-$sql_str = "delete from products where id=$delid";
-mysqli_query($conn, $sql_str);
-
-//trở về trang liệt kê san pham
+// 4. Quay lại trang danh sách sản phẩm
 header("location: listsanpham.php");
-
+exit;
+?>

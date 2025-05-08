@@ -87,16 +87,20 @@ require_once('components/header.php');
             <h2>🧾 Danh sách đơn hàng của bạn</h2>
             <table class="order-table">
                 <tr>
-                    <th>ID đơn hàng</th>
+                    <th>Mã đơn hàng</th>
                     <th>Trạng thái</th>
-                    <th>Ngày tạo</th>
+                    <th>Tên khách hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
                     <th>Ngày cập nhật</th>
                 </tr>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td>#<?php echo $row['id']; ?></td>
                         <td><?php echo $row['status']; ?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
+                        <td><?php echo $row['lastname']; ?>             <?php echo $row['firstname']; ?></td>
+                        <td><?php echo $row['phone']; ?></td>
+                        <td><?php echo $row['address']; ?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($row['updated_at'])); ?></td>
                     </tr>
                 <?php endwhile; ?>
