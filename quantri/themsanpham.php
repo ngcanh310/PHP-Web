@@ -1,5 +1,6 @@
 <?php
 require('includes/header.php');
+require('../db/conn.php');
 ?>
 
 <div class="container">
@@ -18,7 +19,11 @@ require('includes/header.php');
                                 <input type="text" class="form-control form-control-user" id="id" name="id"
                                     aria-describedby="emailHelp" placeholder="Mã sản phẩm">
                             </div>
-
+                            <?php if (isset($_GET['error'])): ?>
+                                <div style="color: red; font-weight: bold; margin-bottom: 10px;">
+                                    <?= htmlspecialchars($_GET['error']) ?>
+                                </div>
+                            <?php endif; ?>
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="name" name="name"
                                     aria-describedby="emailHelp" placeholder="Tên sản phẩm">

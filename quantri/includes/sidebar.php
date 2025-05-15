@@ -12,10 +12,18 @@
   <hr class="sidebar-divider my-0" />
 
   <!-- Nav Item - Dashboard -->
-  <li class="nav-item active">
-    <a class="nav-link" href="thongke.php">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Thống kê chi tiết</span></a>
+  <li class="nav-item">
+    <a class="nav-link " href="#" data-toggle="collapse" data-target="#aa" aria-expanded="true" aria-controls="aa">
+      <i class="fas fa-day"></i>
+      <span>Thống kê chi tiết</span>
+    </a>
+    <div id="aa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Các chức năng:</h6>
+        <a class="collapse-item" href="./thongketheoid.php">Theo sản phẩm</a>
+        <a class="collapse-item" href="./thongketheodoanhthu.php">Theo doanh thu</a>
+      </div>
+    </div>
   </li>
 
   <!-- Divider -->

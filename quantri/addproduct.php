@@ -1,6 +1,6 @@
 <?php
 require('../db/conn.php');
-
+$m = "";
 // Lấy dữ liệu từ form
 $id = $_POST['id'];
 $name = $_POST['name'];
@@ -12,6 +12,13 @@ $giagoc = $_POST['giagoc'];
 $giaban = $_POST['giaban'];
 $danhmuc = $_POST['danhmuc'];
 
+$check_sql = "SELECT id FROM products WHERE id = '$id'";
+$check_result = mysqli_query($conn, $check_sql);
+if (mysqli_num_rows($check_result) > 0) {
+    $m = "ID đã tồn tại, vui lòng điền id khác";
+    header("location: ./themsanpham.php?error=" . urlencode($m));
+    exit;
+}
 // Xử lý hình ảnh
 $countfiles = count($_FILES['anhs']['name']);
 $imgs = '';

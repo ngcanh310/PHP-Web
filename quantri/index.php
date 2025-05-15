@@ -1,6 +1,28 @@
 <?php
 require('includes/header.php');
 include "../db/conn.php";
+
+// Tổng người dùng
+$sql_users = "SELECT COUNT(*) AS total_users FROM users";
+$result_users = mysqli_query($conn, $sql_users);
+$total_users = mysqli_fetch_assoc($result_users)['total_users'];
+
+// Tổng doanh thu
+$sql_revenue = "SELECT SUM(total) AS total_revenue FROM order_details";
+$result_revenue = mysqli_query($conn, $sql_revenue);
+$total_revenue = mysqli_fetch_assoc($result_revenue)['total_revenue'];
+
+// Tổng sản phẩm
+$sql_products = "SELECT COUNT(*) AS total_products FROM products";
+$result_products = mysqli_query($conn, $sql_products);
+$total_products = mysqli_fetch_assoc($result_products)['total_products'];
+
+// Tổng danh mục
+$sql_categories = "SELECT COUNT(*) AS total_categories FROM categories";
+$result_categories = mysqli_query($conn, $sql_categories);
+$total_categories = mysqli_fetch_assoc($result_categories)['total_categories'];
+
+
 // === Doanh thu theo tháng ===
 $sql_month = "SELECT DATE_FORMAT(created_at, '%Y-%m') AS month, SUM(total) AS revenue
               FROM order_details
@@ -38,6 +60,43 @@ while ($row = $result_day->fetch_assoc()) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
+  <div class="row mt-4 text-center" style="margin-bottom: 20px;">
+    <div class="col-md-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <h5 class="card-title">👤 Người dùng</h5>
+          <h3><?= $total_users ?></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <h5 class="card-title">💰 Doanh thu</h5>
+          <h3><?= number_format($total_revenue, 0, '', '.') ?> VNĐ</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card bg-warning text-white">
+        <div class="card-body">
+          <h5 class="card-title">📦 Sản phẩm</h5>
+          <h3><?= $total_products ?></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card bg-danger text-white">
+        <div class="card-body">
+          <h5 class="card-title">📂 Danh mục</h5>
+          <h3><?= $total_categories ?></h3>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <h2 style="text-align: center;">Thống kê doanh thu</h2>
 
