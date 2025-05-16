@@ -32,6 +32,20 @@
   <!-- Heading -->
   <div class="sidebar-heading">Chức năng chính:</div>
 
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item">
+    <a class="nav-link " href="#" data-toggle="collapse" data-target="#xx" aria-expanded="true" aria-controls="aa">
+      <i class="fas fa-day"></i>
+      <span>Người dùng</span>
+    </a>
+    <div id="xx" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Các chức năng:</h6>
+        <a class="collapse-item" href="./listusers.php">Người dùng</a>
+      </div>
+    </div>
+  </li>
+
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"

@@ -26,13 +26,28 @@ require('../db/conn.php');
         $start_date = $_GET['start_date'] . " 00:00:00";
         $end_date = $_GET['end_date'] . " 23:59:59";
 
-        // Lấy danh sách đơn hàng chi tiết
+        // Phân trang
+        $limit = 5;
+        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+        $offset = ($page - 1) * $limit;
+
+        // Đếm tổng số dòng
+        $count_sql = "SELECT COUNT(*) as total FROM order_details od 
+                      JOIN orders o ON od.order_id = o.id 
+                      WHERE od.product_id = $product_id 
+                      AND o.created_at BETWEEN '$start_date' AND '$end_date'";
+        $count_result = mysqli_query($conn, $count_sql);
+        $total_rows = mysqli_fetch_assoc($count_result)['total'];
+        $total_pages = ceil($total_rows / $limit);
+
+        // Lấy dữ liệu phân trang
         $sql = "SELECT od.*, o.created_at 
                 FROM order_details od 
                 JOIN orders o ON od.order_id = o.id 
                 WHERE od.product_id = $product_id 
-                  AND o.created_at BETWEEN '$start_date' AND '$end_date' 
-                ORDER BY o.created_at DESC";
+                AND o.created_at BETWEEN '$start_date' AND '$end_date' 
+                ORDER BY o.created_at DESC
+                LIMIT $limit OFFSET $offset";
         $result = mysqli_query($conn, $sql);
 
         // Lấy thông tin sản phẩm
@@ -90,6 +105,16 @@ require('../db/conn.php');
                     <td><strong>" . number_format($total, 0, '', '.') . " VNĐ</strong></td>
                   </tr>";
             echo "</tbody></table>";
+
+            // PHÂN TRANG
+            if ($total_pages > 1) {
+                echo '<nav aria-label="Page navigation"><ul class="pagination justify-content-center mt-3">';
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    $active = $i == $page ? 'active' : '';
+                    echo "<li class='page-item $active'><a class='page-link' href='?product_id=$product_id&start_date=" . $_GET['start_date'] . "&end_date=" . $_GET['end_date'] . "&page=$i'>$i</a></li>";
+                }
+                echo '</ul></nav>';
+            }
         } else {
             echo "<p>Không có dữ liệu trong khoảng thời gian đã chọn.</p>";
         }
@@ -124,6 +149,12 @@ require('../db/conn.php');
 
         .card-body p {
             margin: 6px 0;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
         }
     </style>
 

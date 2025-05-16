@@ -5,6 +5,26 @@ require('../db/conn.php');
 // Lấy tháng được chọn từ GET, mặc định là tháng hiện tại
 $selected_month = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
 
+// Tổng doanh thu
+$sql_total_revenue = "
+    SELECT SUM(od.total) as total_revenue
+    FROM order_details od
+    JOIN orders o ON od.order_id = o.id
+    WHERE DATE_FORMAT(o.created_at, '%Y-%m') = '$selected_month'
+";
+$total_revenue_result = mysqli_query($conn, $sql_total_revenue);
+$total_revenue = mysqli_fetch_assoc($total_revenue_result)['total_revenue'] ?? 0;
+
+// Tổng sản phẩm bán ra
+$sql_total_qty = "
+    SELECT SUM(od.qty) as total_qty
+    FROM order_details od
+    JOIN orders o ON od.order_id = o.id
+    WHERE DATE_FORMAT(o.created_at, '%Y-%m') = '$selected_month'
+";
+$total_qty_result = mysqli_query($conn, $sql_total_qty);
+$total_qty = mysqli_fetch_assoc($total_qty_result)['total_qty'] ?? 0;
+
 // Truy vấn top 3 sản phẩm theo doanh thu
 $sql_revenue = "
     SELECT p.name, SUM(od.total) as total_revenue
@@ -48,6 +68,26 @@ while ($row = mysqli_fetch_assoc($result_quantity)) {
     ];
 }
 ?>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Tổng doanh thu</h5>
+                <p class="card-text fs-4"><?= number_format($total_revenue) ?> VNĐ</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Tổng sản phẩm đã bán</h5>
+                <p class="card-text fs-4"><?= number_format($total_qty) ?> sản phẩm</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container mt-4">
     <h3 class="mb-4">Thống kê sản phẩm bán chạy nhất theo tháng</h3>

@@ -60,7 +60,7 @@ while ($row = $result_day->fetch_assoc()) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
-  <div class="row mt-4 text-center" style="margin-bottom: 20px;">
+  <div class="row mt-4 text-center" style="margin-bottom: 30px;">
     <div class="col-md-3">
       <div class="card bg-primary text-white">
         <div class="card-body">
