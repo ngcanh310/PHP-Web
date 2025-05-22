@@ -38,9 +38,21 @@
             </div>
             <div class="col-lg-3 col-md-4">
                 <div class="footer__widget">
-                    <h6>Fanpage Facebook</h6>
-
+                    <h6>Kết nối với chúng tôi</h6>
+                    <ul style="width: 100%;">
+                        <li><a href="https://www.facebook.com/ngocank310" target="_blank">
+                                <i class="fa fa-facebook"></i> Facebook: Ngọc Anh</a></li>
+                        <li><a href="https://www.instagram.com/yourshop" target="_blank">
+                                <i class="fa fa-instagram"></i> Instagram: @nashop</a></li>
+                        <li><a href="https://zalo.me/0981346672" target="_blank">
+                                <i class="fa fa-phone"></i> Zalo: 0981 346 672</a></li>
+                        <li><a href="mailto:ngocank310@gmail.com" target="_blank">
+                                <i class="fa fa-envelope"></i> Email: ngocank310@gmail.com</a></li>
+                        <li><a href="https://www.tiktok.com/@yourshop" target="_blank">
+                                <i class="fa fa-music"></i> TikTok: @nashop</a></li>
+                    </ul>
                 </div>
+
             </div>
         </div>
         <div class="row">

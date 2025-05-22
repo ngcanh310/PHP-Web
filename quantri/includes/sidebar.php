@@ -35,13 +35,13 @@
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
     <a class="nav-link " href="#" data-toggle="collapse" data-target="#xx" aria-expanded="true" aria-controls="aa">
-      <i class="fas fa-day"></i>
+      <i class="fas fa-calendar-day"></i>
       <span>Người dùng</span>
     </a>
     <div id="xx" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listusers.php">Người dùng</a>
+        <a class="collapse-item" href="./listusers.php">Liệt kê</a>
       </div>
     </div>
   </li>

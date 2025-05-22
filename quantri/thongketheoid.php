@@ -7,13 +7,16 @@ require('../db/conn.php');
     <h2>Thống kê doanh thu sản phẩm theo ID</h2>
     <form method="GET" class="mb-4">
         <label for="product_id">Nhập ID sản phẩm:</label>
-        <input type="number" name="product_id" required>
+        <input type="number" name="product_id" required value="<?= $_GET['product_id'] ?? '' ?>">
 
         <label for="start_date">Từ ngày:</label>
-        <input type="date" name="start_date" required>
+        <input type="date" name="start_date" required value="<?= $_GET['start_date'] ?? '' ?>">
 
         <label for="end_date">Đến ngày:</label>
-        <input type="date" name="end_date" required>
+        <input type="date" name="end_date" required value="<?= $_GET['end_date'] ?? '' ?>">
+
+        <label for="limit">Số dòng hiển thị:</label>
+        <input type="number" name="limit" min="1" value="<?= $_GET['limit'] ?? 10 ?>">
 
         <button type="submit">Thống kê</button>
     </form>
@@ -25,30 +28,7 @@ require('../db/conn.php');
         $product_id = intval($_GET['product_id']);
         $start_date = $_GET['start_date'] . " 00:00:00";
         $end_date = $_GET['end_date'] . " 23:59:59";
-
-        // Phân trang
-        $limit = 5;
-        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
-        $offset = ($page - 1) * $limit;
-
-        // Đếm tổng số dòng
-        $count_sql = "SELECT COUNT(*) as total FROM order_details od 
-                      JOIN orders o ON od.order_id = o.id 
-                      WHERE od.product_id = $product_id 
-                      AND o.created_at BETWEEN '$start_date' AND '$end_date'";
-        $count_result = mysqli_query($conn, $count_sql);
-        $total_rows = mysqli_fetch_assoc($count_result)['total'];
-        $total_pages = ceil($total_rows / $limit);
-
-        // Lấy dữ liệu phân trang
-        $sql = "SELECT od.*, o.created_at 
-                FROM order_details od 
-                JOIN orders o ON od.order_id = o.id 
-                WHERE od.product_id = $product_id 
-                AND o.created_at BETWEEN '$start_date' AND '$end_date' 
-                ORDER BY o.created_at DESC
-                LIMIT $limit OFFSET $offset";
-        $result = mysqli_query($conn, $sql);
+        $limit = isset($_GET['limit']) && is_numeric($_GET['limit']) ? intval($_GET['limit']) : 10;
 
         // Lấy thông tin sản phẩm
         $sql_product = "SELECT 
@@ -64,9 +44,7 @@ require('../db/conn.php');
 
         if ($product_info): ?>
             <div class="card mt-4 mb-4">
-                <div class="card-header bg-info text-white">
-                    Thông tin sản phẩm
-                </div>
+                <div class="card-header bg-info text-white">Thông tin sản phẩm</div>
                 <div class="card-body">
                     <p><strong>ID sản phẩm:</strong> <?= $product_info['product_id'] ?></p>
                     <p><strong>Tên sản phẩm:</strong> <?= $product_info['product_name'] ?></p>
@@ -76,45 +54,55 @@ require('../db/conn.php');
             </div>
         <?php endif;
 
+        // Lấy dữ liệu thống kê
+        $sql = "SELECT od.*, o.created_at 
+                FROM order_details od 
+                JOIN orders o ON od.order_id = o.id 
+                WHERE od.product_id = $product_id 
+                AND o.created_at BETWEEN '$start_date' AND '$end_date' 
+                ORDER BY o.created_at DESC
+                LIMIT $limit";
+        $result = mysqli_query($conn, $sql);
+
+        // Tính tổng doanh thu & lượt bán
+        $total_sql = "SELECT SUM(od.total) AS total_revenue, SUM(od.qty) AS total_qty 
+                      FROM order_details od 
+                      JOIN orders o ON od.order_id = o.id 
+                      WHERE od.product_id = $product_id 
+                      AND o.created_at BETWEEN '$start_date' AND '$end_date'";
+        $total_result = mysqli_query($conn, $total_sql);
+        $total_data = mysqli_fetch_assoc($total_result);
+        $total_revenue = $total_data['total_revenue'] ?? 0;
+        $total_qty = $total_data['total_qty'] ?? 0;
+
         echo "<h4>Kết quả thống kê sản phẩm ID: $product_id</h4>";
+        echo "<p><strong>Tổng doanh thu:</strong> " . number_format($total_revenue, 0, '', '.') . " VNĐ | 
+              <strong>Tổng lượt bán:</strong> " . number_format($total_qty) . "</p>";
+
         if (mysqli_num_rows($result) > 0) {
             echo "<table border='1' cellpadding='6' class='table table-striped table-bordered'>";
             echo "<thead class='table-light'>
                     <tr>
+                        <th>Thứ tự</th>
                         <th>Ngày mua</th>
                         <th>Giá lúc mua</th>
                         <th>Số lượng</th>
                         <th>Thành tiền</th>
                     </tr>
                   </thead><tbody>";
-
-            $total = 0;
-
+            $stt = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>
+                        <td>$stt</td>
                         <td>" . date("d-m-Y H:i", strtotime($row['created_at'])) . "</td>
                         <td>" . number_format($row['price'], 0, '', '.') . " VNĐ</td>
                         <td>" . $row['qty'] . "</td>
                         <td>" . number_format($row['total'], 0, '', '.') . " VNĐ</td>
                       </tr>";
-                $total += $row['total'];
+                $stt += 1;
             }
 
-            echo "<tr class='table-secondary'>
-                    <td colspan='3'><strong>Tổng doanh thu</strong></td>
-                    <td><strong>" . number_format($total, 0, '', '.') . " VNĐ</strong></td>
-                  </tr>";
             echo "</tbody></table>";
-
-            // PHÂN TRANG
-            if ($total_pages > 1) {
-                echo '<nav aria-label="Page navigation"><ul class="pagination justify-content-center mt-3">';
-                for ($i = 1; $i <= $total_pages; $i++) {
-                    $active = $i == $page ? 'active' : '';
-                    echo "<li class='page-item $active'><a class='page-link' href='?product_id=$product_id&start_date=" . $_GET['start_date'] . "&end_date=" . $_GET['end_date'] . "&page=$i'>$i</a></li>";
-                }
-                echo '</ul></nav>';
-            }
         } else {
             echo "<p>Không có dữ liệu trong khoảng thời gian đã chọn.</p>";
         }
