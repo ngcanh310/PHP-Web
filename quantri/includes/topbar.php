@@ -42,7 +42,7 @@
           echo $user_admin['name'];
           ?>
         </span>
-        <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+        <img class="img-profile rounded-circle" src="../img/undraw_profile.svg" />
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -53,6 +53,7 @@
           Logout
         </a>
       </div>
+
     </li>
   </ul>
 </nav>

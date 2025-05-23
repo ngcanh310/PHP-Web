@@ -138,7 +138,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.php"><img src="img/logo.png" alt=""></a>
+                        <a href="../php/index.php"><img src="../img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -151,7 +151,7 @@
                                     <select name="danhmuc">
                                         <option value='*'>Tất cả danh mục</option>
                                         <?php
-                                        require('./db/conn.php');
+                                        require('../db/conn.php');
                                         $sql_str = "select * from categories order by name";
                                         $result = mysqli_query($conn, $sql_str);
                                             while ($row = mysqli_fetch_assoc($result)){
@@ -189,7 +189,7 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="cacdonhang.php"><img src="./img/document.png" style="width: 20px"></a>
+                            <li><a href="cacdonhang.php"><img src="../img/document.png" style="width: 20px"></a>
                             <li><a href="./cart.php"><i class="fa fa-shopping-bag"></i> <span>
                                 <?php
                                     $cart = [];
@@ -254,17 +254,18 @@
                 <!-- <div class="col-lg-6"> -->
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="/">Trang chủ</a></li>
-                            <li><a href="/shop.php">Cửa hàng</a></li>
-                            <li><a href="/blog.php">Tin tức</a></li>
+                            <li class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>"><a href="../php/index.php">Trang chủ</a></li>
+                            <li class="<?= basename($_SERVER['PHP_SELF']) == 'shop.php' ? 'active' : '' ?>"><a href="../php/shop.php">Cửa hàng</a></li>
+                            <li class="<?= basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : '' ?>"><a href="../php/blog.php">Tin tức</a></li>
                         </ul>
                     </nav>
                 <!-- </div> -->
                     
-                    <?php   
+                    <?php
+                     
     if ($is_homepage){
        ?>
- <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
+ <div class="hero__item set-bg" data-setbg="../img/hero/banner.jpg">
                         <div class="hero__text">
                             <span>Tươi Ngon</span>
                             <h2>Rau Củ Quả <br />100% Tự Nhiên</h2>

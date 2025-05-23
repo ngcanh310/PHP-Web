@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../php/index.php">
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-laugh-wink"></i>
     </div>
@@ -20,8 +20,8 @@
     <div id="aa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./thongketheoid.php">Theo sản phẩm</a>
-        <a class="collapse-item" href="./thongketheodoanhthu.php">Theo doanh thu</a>
+        <a class="collapse-item" href="../php/thongketheoid.php">Theo sản phẩm</a>
+        <a class="collapse-item" href="../php/thongketheodoanhthu.php">Theo doanh thu</a>
       </div>
     </div>
   </li>
@@ -41,7 +41,7 @@
     <div id="xx" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listusers.php">Liệt kê</a>
+        <a class="collapse-item" href="../php/listusers.php">Liệt kê</a>
       </div>
     </div>
   </li>
@@ -56,8 +56,8 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listcats.php">Liệt kê</a>
-        <a class="collapse-item" href="./themdanhmuc.php">Thêm mới</a>
+        <a class="collapse-item" href="../php/listcats.php">Liệt kê</a>
+        <a class="collapse-item" href="../php/themdanhmuc.php">Thêm mới</a>
       </div>
     </div>
   </li>
@@ -71,8 +71,8 @@
     <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listsanpham.php">Liệt kê</a>
-        <a class="collapse-item" href="./themsanpham.php">Thêm mới</a>
+        <a class="collapse-item" href="../php/listsanpham.php">Liệt kê</a>
+        <a class="collapse-item" href="../php/themsanpham.php">Thêm mới</a>
       </div>
     </div>
   </li>
@@ -86,8 +86,8 @@
     <div id="collapseDMTT" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listnewscats.php">Liệt kê</a>
-        <a class="collapse-item" href="./themdanhmuctintuc.php">Thêm mới</a>
+        <a class="collapse-item" href="../php/listnewscats.php">Liệt kê</a>
+        <a class="collapse-item" href="../php/themdanhmuctintuc.php">Thêm mới</a>
       </div>
     </div>
   </li>
@@ -101,8 +101,8 @@
     <div id="collapseTT" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listnews.php">Liệt kê</a>
-        <a class="collapse-item" href="./themtintuc.php">Thêm mới</a>
+        <a class="collapse-item" href="../php/listnews.php">Liệt kê</a>
+        <a class="collapse-item" href="../php/themtintuc.php">Thêm mới</a>
       </div>
     </div>
   </li>
@@ -115,7 +115,7 @@
     <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Các chức năng:</h6>
-        <a class="collapse-item" href="./listorders.php">Liệt kê</a>
+        <a class="collapse-item" href="../php/listorders.php">Liệt kê</a>
 
       </div>
     </div>

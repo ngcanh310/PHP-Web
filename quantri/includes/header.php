@@ -3,7 +3,7 @@ session_start();
 //kiem tra neu khong co session user thi khogn cho phep vao trang quan tri
 // chuyenr qua trang login.php
 if (!isset($_SESSION["user_admin"])) {
-  header("Location: login.php");
+  header("Location: ../php/login.php");
   die();
 }
 ?>
@@ -16,12 +16,11 @@ if (!isset($_SESSION["user_admin"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="icon" href="../img/favicon.png" type="image/png">
   <title>Admin Shop</title>
 
   <!-- Custom fonts for this template-->
 
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet" />
@@ -30,18 +29,19 @@ if (!isset($_SESSION["user_admin"])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Latest compiled JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.
+  delivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+  <link href="../css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <?php require_once('sidebar.php'); ?>
+    <?php require_once('../includes/sidebar.php'); ?>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -49,7 +49,7 @@ if (!isset($_SESSION["user_admin"])) {
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <?php require('topbar.php'); ?>
+        <?php require('../includes/topbar.php'); ?>
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
