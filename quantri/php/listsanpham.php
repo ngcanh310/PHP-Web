@@ -67,7 +67,7 @@ ORDER BY products.name
             <tr>
                 <td><?= $row['pid'] ?></td>
                 <td><?=$row['pname']?></td>
-                <td><?=anhdaidien($row['images'], "100px")?></td>
+                <td><?= anhdaidien("../uploads/" . $row['images'], "100px") ?></td>
                 <td><?=$row['cname']?></td>
                 
                 <td><?=$row['pstatus']?></td>

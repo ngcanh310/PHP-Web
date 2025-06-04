@@ -77,7 +77,7 @@ require('../../db/conn.php');
 
         echo "<h4>Kết quả thống kê sản phẩm ID: $product_id</h4>";
         echo "<p><strong>Tổng doanh thu:</strong> " . number_format($total_revenue, 0, '', '.') . " VNĐ | 
-              <strong>Tổng lượt bán:</strong> " . number_format($total_qty) . "</p>";
+              <strong>Tổng số lượng bán:</strong> " . number_format($total_qty) . "</p>";
 
         if (mysqli_num_rows($result) > 0) {
             echo "<table border='1' cellpadding='6' class='table table-striped table-bordered'>";

@@ -36,7 +36,7 @@ require_once('../components/header.php');
                 ?>
                 <div class="col-lg-3 col-md-4 col-sm-6 mix <?= $row['cslug'] ?>">
                     <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="<?= "../quantri/" . $anh_arr[0] ?>">
+                        <div class="featured__item__pic set-bg" data-setbg="<?= "../quantri/uploads/" . $anh_arr[0] ?>">
 
                         </div>
                         <div class="featured__item__text">
@@ -89,7 +89,7 @@ require_once('../components/header.php');
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="blog__item">
                         <div class="blog__item__pic">
-                            <img src="<?= '../quantri/' . $row['avatar'] ?>" alt="">
+                            <img src="<?= '../quantri/uploads/' . $row['avatar'] ?>" alt="">
                         </div>
                         <div class="blog__item__text">
                             <ul>

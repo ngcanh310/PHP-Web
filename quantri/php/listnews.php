@@ -60,7 +60,7 @@ function anhdaidien($arrstr,$height){
             <tr>
                 <td><?=$stt?></td>
                 <td><?=$row['title']?></td>
-                <td><img src='<?=$row['avatar']?>' height='100px' /></td>
+                <td><img src='<?= "../uploads/" . $row['avatar'] ?>' height='100px' /></td>
                 <td><?=$row['name']?></td>
                 
                 <td>
